@@ -19,9 +19,16 @@ NEVER write code or show implementation details:
 
 ## Before Starting
 1. Read `features/INDEX.md` to understand project context
-2. Check existing components: `git ls-files src/components/`
-3. Check existing APIs: `git ls-files src/app/api/`
-4. Read the feature spec the user references
+2. Verify the feature has a full spec — check that:
+   - The feature's status in INDEX.md is **"Planned"** (not "Roadmap")
+   - A spec file `features/PROJ-X-*.md` actually exists on disk
+3. Check existing components: `git ls-files src/components/`
+4. Check existing APIs: `git ls-files src/app/api/`
+5. Read the feature spec the user references
+
+**If the feature status is "Roadmap" or no spec file exists:**
+> "This feature doesn't have a spec yet. Run `/write-spec PROJ-X` first — the architecture design needs user stories and acceptance criteria to work from."
+→ Stop here.
 
 ## Workflow
 
