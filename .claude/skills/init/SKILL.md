@@ -39,10 +39,44 @@ Cover these topics through natural conversation (not as a checklist):
 - Primary target users and their specific pain points
 - Must-have features for MVP vs. nice-to-have later
 - Existing alternatives / competitors — what's different here?
-- Backend needs: user accounts, data persistence, multi-user collaboration?
 - Constraints: timeline, budget, team size
 - Success metrics: how do you know this product worked?
 - Non-goals: what are you explicitly NOT building in this version?
+
+### Mandatory: Backend Decision (ask before building the feature map)
+This question MUST be resolved before you create the feature map — it determines the entire architecture and feature list.
+
+Ask:
+> "Does the app need to store data persistently or sync between users/devices?"
+> My recommendation: Yes — most apps need at least local persistence. If multiple users or cross-device sync is needed, a backend is required.
+
+**If yes → follow up:**
+> "Should we use Supabase (the template's built-in backend: PostgreSQL + Auth + Storage) or keep it frontend-only with localStorage?"
+> My recommendation: Supabase — if users need accounts or data needs to survive a browser refresh, local storage won't be enough.
+
+**If Supabase is chosen:**
+- Add **"Supabase Infrastructure Setup"** as **PROJ-1, P0** in the feature map
+- All features that require auth, data storage, or file uploads must list PROJ-1 as a dependency
+- This feature covers: project setup, environment variables, database schema outline, auth configuration
+
+**If frontend-only (localStorage):**
+- No infrastructure feature needed
+- Note "No backend — localStorage only" in the PRD Constraints section
+
+### Mandatory: Design System (ask before building the feature map)
+Ask:
+> "Do you have an existing design system, brand guidelines, or UI reference I should follow?"
+> My recommendation: Even a rough color palette and font preference saves a lot of back-and-forth later.
+
+**Three ways the user can provide it:**
+1. **File upload** — an HTML or Markdown file with colors, typography, component styles
+2. **Manual input** — the user describes it directly (e.g. "dark theme, Inter font, blue primary #2563EB")
+3. **None** — use the template's default (Tailwind + shadcn/ui defaults)
+
+**If a design system is provided:**
+- Save it to `docs/design-system.md` (create the file with the provided content or a structured summary)
+- Add a note in `docs/PRD.md` under Constraints: "Design system: see `docs/design-system.md`"
+- The `/frontend` skill will read this file when building UI components
 
 ## After the Interview: Create the PRD
 
@@ -85,6 +119,12 @@ Apply feedback, then update `features/INDEX.md` and the "Next Available ID" line
 
 ## Checklist Before Completion
 - [ ] PRD fully filled out (Vision, Target Users, Roadmap, Metrics, Constraints, Non-Goals)
+- [ ] Backend decision resolved (Supabase vs. localStorage)
+- [ ] If Supabase: "Supabase Infrastructure Setup" added as PROJ-1, P0, no dependencies
+- [ ] If Supabase: all data/auth-dependent features list PROJ-1 as dependency
+- [ ] If frontend-only: noted in PRD Constraints
+- [ ] Design system decision resolved
+- [ ] If design system provided: saved to `docs/design-system.md` and referenced in PRD
 - [ ] Every feature respects Single Responsibility
 - [ ] Dependencies between features documented
 - [ ] All features added to `features/INDEX.md` with status "Roadmap"
